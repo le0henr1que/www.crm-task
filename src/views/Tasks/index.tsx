@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { MagnifyingGlass, Funnel, CaretLeft , CaretRight   } from "phosphor-react";
+import { MagnifyingGlass, Funnel, CaretLeft , CaretRight  } from "phosphor-react";
 import Header from '../../components/Header';
 
 import { useNavigate } from 'react-router';
@@ -26,29 +26,48 @@ function Task() {
   const [celular, setCelular] = useState(0)
   const [computador, setComputador] = useState(0)
 
+  const [page, setPage] = useState(1)
+
+  const [countSolicitation, setCountSolicitation] = useState(0)
+
+  // const [alert, setAlert] = useState('hidden')
+
+  const handleClickPagination = (selectArrowNextOrBack:string) => {
+    if(selectArrowNextOrBack == "Next"){
+      setPage(page+1)
+      page > Math.round(countSolicitation / 6) - 1  && setPage(Math.round(countSolicitation / 6))
+    }else{
+      setPage(page-1)
+      page == 1  && setPage(1)
+    } 
+  }
 
   const navigate = useNavigate()
   function listSolicitaation(){
     socket.on('list', function(solicitation){
+      console.log(solicitation)
       setSolicitation(solicitation)
-      const lenghtCelulcar = solicitation.filter((solicitation: { subject: string; }) => solicitation.subject == "Celular" );
-      const lenghtComputer = solicitation.filter((solicitation: { subject: string; }) => solicitation.subject == "Computador" );
-      setCelular(lenghtCelulcar.length)
-      setComputador(lenghtComputer.length)
     })
   }
   listSolicitaation()
 
-    const hendleFilter = (type:string) => {
-      setSolicitation(solicitation.filter((solicitation: { subject: string; }) => solicitation.subject == type ))
-    }
-useEffect(() =>{
-  listSolicitaation()
-})
+  function countPageSolicitation(){
+    socket.on('countElements', function(countElements){
+      console.log(countElements)
+      setCountSolicitation(countElements)
+    })
+  }
+  countPageSolicitation()
+
+  useEffect(() =>{
+    listSolicitaation()
+    countPageSolicitation()
+
+  })
   return  (
      <>
-      <Header/>
-     
+      <Header />
+
       {/* <h1 className='text-slate-800 text-3xl font-bold flex justify-center mt-10 '>To do</h1> */}
           <div className='w-full h-20 flex justify-center border-b-2 bg-transparent mt-10'>
             {/* <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center  border-r'>
@@ -59,11 +78,11 @@ useEffect(() =>{
               <h1 className='text-[yellow] text-3xl font-bold flex justify-center '>12</h1>
               <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Abandonos</h1>
             </div> */}
-            <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center  border-r cursor-pointer' onClick={() => hendleFilter("Computador")}>
+            <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center  border-r cursor-pointer' >
               <h1 className='text-[red] text-3xl font-bold flex justify-center '>{computador}</h1>
               <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Computador</h1>
             </div>
-            <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center cursor-pointer' onClick={() => hendleFilter('Celular')}>
+            <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center cursor-pointer' >
               <h1 className='text-[blue] text-3xl font-bold flex justify-center '>{celular}</h1>
               <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Celular</h1>
             </div>
@@ -125,9 +144,10 @@ useEffect(() =>{
                   </tbody>
                 </table>
                 <div className="float-right p-3 flex gap-2">
-                  <h1 className='text-neutral-400 text-sm font-bold '>1-10 de 500 </h1>
-                  <CaretLeft/>
-                  <CaretRight/>
+                  <h1 className='text-neutral-400 text-sm font-bold '>{page}-{Math.round(countSolicitation / 6)} de {countSolicitation} </h1>
+                  <button onClick={() => handleClickPagination("Back")} ><CaretLeft className='cursor-pointer' /></button>
+                  <button onClick={() => handleClickPagination("Next")} ><CaretRight className='cursor-pointer' /></button>
+                  {/* <CaretRight className='cursor-pointer' onClick={() => handleClickPagination("Next")} disabled/> */}
                 </div>
               </div>
           </div>

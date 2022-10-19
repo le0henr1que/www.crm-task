@@ -1,5 +1,7 @@
  import React from "react";
 
+ import {BellSimple} from 'phosphor-react'
+
  function Header(){
     return (
         <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 bg-white mb-3 shadow-md">
@@ -10,6 +12,7 @@
                 href="#"
                 >
                 {/* CRM  TO-DO */}
+                {/* <BellSimple size={25}/> */}
                 </a>
                 <button
                 className="text-white cursor-pointer text-xl leading-none px-3 py-1 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none"

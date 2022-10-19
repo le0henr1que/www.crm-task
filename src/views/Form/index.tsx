@@ -25,7 +25,7 @@ function Contact() {
     }
   return  (
      <>
-      <Header/>
+      {/* <Header lengthElement='20'/> */}
 
      <div className='w-full mt-20 flex justify-center items-center'>
         <div className='w-[878.64px] h-[701px] bg-white rounded-md mb-20 shadow-lg border flex flex-col items-center'>
