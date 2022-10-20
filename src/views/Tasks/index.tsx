@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { MagnifyingGlass, Funnel, CaretLeft , CaretRight  } from "phosphor-react";
 import Header from '../../components/Header';
+import Load from '../../components/Load';
 
 import { useNavigate } from 'react-router';
 import '../../input.css';
@@ -26,6 +27,8 @@ function Task() {
   const [celular, setCelular] = useState(0)
   const [computador, setComputador] = useState(0)
 
+  const [load, setLoad] = useState(true)
+
   const [page, setPage] = useState(1)
 
   const [countSolicitation, setCountSolicitation] = useState(0)
@@ -33,12 +36,32 @@ function Task() {
   // const [alert, setAlert] = useState('hidden')
 
   const handleClickPagination = (selectArrowNextOrBack:string) => {
+  
     if(selectArrowNextOrBack == "Next"){
       setPage(page+1)
       page > Math.round(countSolicitation / 6) - 1  && setPage(Math.round(countSolicitation / 6))
+      
+      
+      socket.emit('listNextPagination', page)
+
+      socket.on('emitNextPage', function(solicitation){
+        console.log(solicitation)
+        setSolicitation(solicitation)
+      })
+
     }else{
       setPage(page-1)
       page == 1  && setPage(1)
+
+      console.log(page - 2)
+      var pagination = page - 2
+      socket.emit('listNextPagination', pagination <= 0 ? 0 : pagination)
+
+      socket.on('emitNextPage', function(solicitation){
+        console.log(solicitation)
+        setSolicitation(solicitation)
+      })
+
     } 
   }
 
@@ -47,6 +70,7 @@ function Task() {
     socket.on('list', function(solicitation){
       console.log(solicitation)
       setSolicitation(solicitation)
+      setLoad(false)
     })
   }
   listSolicitaation()
@@ -58,6 +82,7 @@ function Task() {
     })
   }
   countPageSolicitation()
+
 
   useEffect(() =>{
     listSolicitaation()
@@ -92,8 +117,11 @@ function Task() {
             <div className="w-[90%]  border mt-10 rounded-lg  overflow-hidden ">
               <div className="w-full justify-between flex p-[15px] border-b">
                   <div>
-                    <h1 className='text-slate-800 text-3xl font-bold flex justify-center '>Clientes</h1>
+                    <h1 className='text-slate-800 text-3xl font-bold flex justify-center '>Solicitações</h1>
                   </div>
+
+                  {load == true && <Load /> }
+
                   <div className='flex gap-5 mt-2'>
                     <MagnifyingGlass className='text-xl'/>
                     <Funnel className='text-xl'/>
@@ -122,10 +150,10 @@ function Task() {
                       return (
                         <tr className="border-b">
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 cursor-pointer" onClick={() => navigate(`/Contact/${solicitation._id}`)}>
-                            {/* <div onClick={handleCreateSolicitation} className='w-[150px] h-[29px] rounded-[26px] bg-[#4BB450] flex flex-col justify-center items-center'>
-                              <h1 className='text-white text-sm font-bold flex justify-center '>Clientes</h1>
-                            </div> */}
-                            {solicitation.status}
+                            <div className='w-[150px] h-[29px] rounded-[26px] bg-[#4BB450] flex flex-col justify-center items-center'>
+                              <h1 className='text-white text-sm font-bold flex justify-center '>   {solicitation.status}</h1>
+                            </div>
+                        
                  
                           </td>
                           <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
