@@ -3,12 +3,21 @@ import { MagnifyingGlass, Funnel, CaretLeft , CaretRight  } from "phosphor-react
 import Header from '../../components/Header';
 import Load from '../../components/Load';
 
+
+// import env from "react-dotenv";
+
 import { useNavigate } from 'react-router';
 import '../../input.css';
 import io from 'socket.io-client'
 import { Hidden } from '@material-ui/core';
 
-const socket = io('http://localhost:5000')
+// const SOCKET_URL: string = (process.env.REACT_APP_SOCKET_URL as string);
+
+// alert(!import.meta.env.VITE_SOME_KEY ? "Váriavel não existe" : import.meta.env.VITE_SOME_KEY )
+// alert(import.meta.env.VITE_SOME_KEY)
+
+
+const socket = io(import.meta.env.VITE_SOCKET_URL)
 
 
 
@@ -94,7 +103,7 @@ function Task() {
       <Header />
 
       {/* <h1 className='text-slate-800 text-3xl font-bold flex justify-center mt-10 '>To do</h1> */}
-          <div className='w-full h-20 flex justify-center border-b-2 bg-transparent mt-10'>
+          <div className='w-full h-20 flex justify-center bg-transparent mt-10 gap-20'>
             {/* <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center  border-r'>
               <h1 className='text-[green] text-3xl font-bold flex justify-center '>12</h1>
               <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Etapas</h1>
@@ -103,13 +112,17 @@ function Task() {
               <h1 className='text-[yellow] text-3xl font-bold flex justify-center '>12</h1>
               <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Abandonos</h1>
             </div> */}
-            <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center  border-r cursor-pointer' >
-              <h1 className='text-[red] text-3xl font-bold flex justify-center '>{computador}</h1>
-              <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Computador</h1>
+               <div className='w-[250px] h-[70px] bg-[#4BB450] flex flex-col justify-center items-center  shadow-lg  cursor-pointer rounded-lg ' >
+              <h1 className='text-white text-3xl font-bold flex justify-center '>{computador}</h1>
+              <h1 className='text-white text-sm font-regular flex justify-center'>Total</h1>
             </div>
-            <div className='w-[250px] h-[70px] bg-white flex flex-col justify-center items-center cursor-pointer' >
-              <h1 className='text-[blue] text-3xl font-bold flex justify-center '>{celular}</h1>
-              <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Celular</h1>
+            <div className='w-[250px] h-[70px] bg-[#4BB450] flex flex-col justify-center items-center  shadow-lg  cursor-pointer rounded-lg ' >
+              <h1 className='text-white text-3xl font-bold flex justify-center '>{computador}</h1>
+              <h1 className='text-white text-sm font-regular flex justify-center'>Computador</h1>
+            </div>
+            <div className='w-[250px] h-[70px] bg-[#4BB450] flex flex-col justify-center items-center  shadow-lg cursor-pointer rounded-lg ' >
+              <h1 className='text-white text-3xl font-bold flex justify-center '>{celular}</h1>
+              <h1 className='text-white text-sm font-regular flex justify-center'>Celular</h1>
             </div>
           </div>
 
