@@ -2,7 +2,7 @@
 
  import {BellSimple} from 'phosphor-react'
 
-//  import {logo} from '/public/logo.png'
+//  import {logo} from '../assets/logo.png'
 
  function Header(){
     return (
@@ -13,7 +13,7 @@
                 className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase text-slate-800"
                 href="#"
                 >
-                    {/* <img src={logo} /> */}
+                    <img src="/logo.png" className="w-[200px]"/>
                 {/* CRM  TO-DO */}
                 {/* <BellSimple size={25}/> */}
                 </a>

@@ -7,7 +7,7 @@ import '../../input.css';
 import { useNavigate, useParams } from 'react-router';
 
 import io from 'socket.io-client'
-const socket = io('http://localhost:5000')
+const socket = io(import.meta.env.VITE_SOCKET_URL)
 
 interface Solicitation {
     _id: String;

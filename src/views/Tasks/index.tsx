@@ -41,6 +41,8 @@ function Task() {
   const [page, setPage] = useState(1)
 
   const [countSolicitation, setCountSolicitation] = useState(0)
+  const [contSolicitationPhone, setCountContSolicitationPhone] = useState(0)
+  const [contSolicitationComputer, setCountContSolicitationComputer] = useState(0)
 
   // const [alert, setAlert] = useState('hidden')
 
@@ -75,14 +77,31 @@ function Task() {
   }
 
   const navigate = useNavigate()
-  function listSolicitaation(){
+
+  const handleFilter = (countIn:string, subjectFilter:string) => {
+   
+      setLoad(true)
+      setSolicitation([])
+      socket.emit("handleFilter", countIn, "Aguardando", subjectFilter)
+
+      socket.on("list", function(solicitation){
+        console.log(solicitation)
+        setSolicitation(solicitation)
+        setLoad(false)
+      })
+
+  
+  }
+ 
+
+  function listSolicitation(){
     socket.on('list', function(solicitation){
       console.log(solicitation)
       setSolicitation(solicitation)
       setLoad(false)
     })
   }
-  listSolicitaation()
+  listSolicitation()
 
   function countPageSolicitation(){
     socket.on('countElements', function(countElements){
@@ -92,12 +111,30 @@ function Task() {
   }
   countPageSolicitation()
 
+  function amountComputer(){
+    socket.on('CountComputer', function(countElements){
+      console.log(countElements)
+      setCountContSolicitationComputer(countElements)
+    })
+  }
+  amountComputer()
+
+  function amountPhone(){
+    socket.on('ContPhone', function(countElements){
+      console.log(countElements)
+      setCountContSolicitationPhone(countElements)
+    })
+  }
+  amountPhone()
+
 
   useEffect(() =>{
-    listSolicitaation()
+    listSolicitation()
     countPageSolicitation()
+    amountPhone()
+    amountComputer()
 
-  })
+  }, solicitation)
   return  (
      <>
       <Header />
@@ -112,16 +149,16 @@ function Task() {
               <h1 className='text-[yellow] text-3xl font-bold flex justify-center '>12</h1>
               <h1 className='text-neutral-500 text-sm font-regular flex justify-center'>Abandonos</h1>
             </div> */}
-               <div className='w-[250px] h-[70px] bg-[#4BB450] flex flex-col justify-center items-center  shadow-lg  cursor-pointer rounded-lg ' >
-              <h1 className='text-white text-3xl font-bold flex justify-center '>{computador}</h1>
+               <div className='w-[250px] h-[70px] bg-[#53BC00] flex flex-col justify-center items-center  shadow-lg  cursor-pointer rounded-lg '  onClick={() => handleFilter("countElements", "AllContent")}>
+              <h1 className='text-white text-3xl font-bold flex justify-center '>{countSolicitation}</h1>
               <h1 className='text-white text-sm font-regular flex justify-center'>Total</h1>
             </div>
-            <div className='w-[250px] h-[70px] bg-[#4BB450] flex flex-col justify-center items-center  shadow-lg  cursor-pointer rounded-lg ' >
-              <h1 className='text-white text-3xl font-bold flex justify-center '>{computador}</h1>
+            <div className='w-[250px] h-[70px] bg-[#53BC00] flex flex-col justify-center items-center  shadow-lg  cursor-pointer rounded-lg ' onClick={() => handleFilter("CountComputer", "Computador")}>
+              <h1 className='text-white text-3xl font-bold flex justify-center '>{contSolicitationComputer}</h1>
               <h1 className='text-white text-sm font-regular flex justify-center'>Computador</h1>
             </div>
-            <div className='w-[250px] h-[70px] bg-[#4BB450] flex flex-col justify-center items-center  shadow-lg cursor-pointer rounded-lg ' >
-              <h1 className='text-white text-3xl font-bold flex justify-center '>{celular}</h1>
+            <div className='w-[250px] h-[70px] bg-[#53BC00] flex flex-col justify-center items-center  shadow-lg cursor-pointer rounded-lg ' onClick={() => handleFilter("ContPhone", "Celular")}>
+              <h1 className='text-white text-3xl font-bold flex justify-center '>{contSolicitationPhone}</h1>
               <h1 className='text-white text-sm font-regular flex justify-center'>Celular</h1>
             </div>
           </div>
@@ -163,7 +200,7 @@ function Task() {
                       return (
                         <tr className="border-b">
                           <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 cursor-pointer" onClick={() => navigate(`/Contact/${solicitation._id}`)}>
-                            <div className='w-[150px] h-[29px] rounded-[26px] bg-[#4BB450] flex flex-col justify-center items-center'>
+                            <div className='w-[150px] h-[29px] rounded-[26px] bg-[#53BC00] flex flex-col justify-center items-center'>
                               <h1 className='text-white text-sm font-bold flex justify-center '>   {solicitation.status}</h1>
                             </div>
                         

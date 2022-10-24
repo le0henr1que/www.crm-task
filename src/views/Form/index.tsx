@@ -6,7 +6,7 @@ import Header from '../../components/Header';
 import '../../input.css';
 
 import io from 'socket.io-client'
-const socket = io('http://localhost:5000')
+const socket = io(import.meta.env.VITE_SOCKET_URL)
 
 
   
@@ -30,8 +30,9 @@ function Contact() {
      <div className='w-full mt-20 flex justify-center items-center'>
         <div className='w-[878.64px] h-[701px] bg-white rounded-md mb-20 shadow-lg border flex flex-col items-center'>
 
-            <div className='w-full border-b h-20 p-5 flex justify-between items-center'>
-                <h1 className='text-[#1B1B1B] text-md font-regular  '>Formulário de abertura</h1>
+            <div className='w-full border-b h-20 p-5 flex justify-center items-center'>
+                <img src="/logo.png" className="w-[150px]"/>
+                {/* <h1 className='text-[#1B1B1B] text-md font-regular  '>Formulário de abertura</h1> */}
             </div>
             <form className="w-full max-w-lg mt-20" onSubmit={handleCreateSolicitation}>
                 <div className="flex flex-wrap -mx-3 mb-6">
@@ -39,8 +40,8 @@ function Contact() {
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-first-name">
                         Nome
                     </label>
-                    <input id="name" name="name" className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="Jane"/>
-                    <p className="text-red-500 text-xs italic">Please fill out this field.</p>
+                    <input id="name" name="name" className={"appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"} type="text" placeholder="Jane"/>
+                    {/* <p className="text-red-500 text-xs italic">Please fill out this field.</p> */}
                     </div>
                     <div className="w-full md:w-1/2 px-3">
                     <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="grid-last-name">
@@ -72,7 +73,7 @@ function Contact() {
                         <textarea id="message" className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" placeholder="Sua mensagem..."></textarea>
                     </div>
                 </div>
-                <button className="bg-[#00648A] hover:bg-blue-700 font-bold py-2 px-4 rounded text-white float-right mt-10">
+                <button className="bg-[#53BC00] hover:bg-blue-700 font-bold py-2 px-4 rounded text-white float-right mt-10">
                     Enviar
                 </button>
                 </form>
