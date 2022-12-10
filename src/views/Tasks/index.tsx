@@ -17,7 +17,12 @@ import { Hidden } from '@material-ui/core';
 // alert(import.meta.env.VITE_SOME_KEY)
 
 
-const socket = io(import.meta.env.VITE_SOCKET_URL)
+// const socket = io(import.meta.env.VITE_SOCKET_URL)
+const token = "tokenTeste";
+
+const socket = io(import.meta.env.VITE_SOCKET_URL, {
+  query: {token}
+});
 
 
 
