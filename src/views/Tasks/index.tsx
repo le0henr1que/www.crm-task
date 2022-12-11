@@ -12,12 +12,6 @@ import io from 'socket.io-client'
 import { Hidden } from '@material-ui/core';
 
 
-const token = localStorage.getItem('token')
-
-const socket = io(import.meta.env.VITE_API_URL, {
-  query: {token}
-});
-
 
 
 interface Solicitation {
@@ -31,6 +25,15 @@ interface Solicitation {
 
 
 function Task() {
+
+  
+    const token = localStorage.getItem('token')
+
+    const socket = io(import.meta.env.VITE_API_URL, {
+      query: {token}
+    });
+
+
   const [solicitation, setSolicitation] = useState<Solicitation[]>([])
   const [celular, setCelular] = useState(0)
   const [computador, setComputador] = useState(0)
@@ -128,6 +131,7 @@ function Task() {
 
 
   useEffect(() =>{
+    
     listSolicitation()
     countPageSolicitation()
     amountPhone()
