@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.2.1",
     "dotenv": "^16.0.3",
     "env": "^0.0.2",
     "env-cmd": "^10.1.0",

@@ -11,16 +11,10 @@ import '../../input.css';
 import io from 'socket.io-client'
 import { Hidden } from '@material-ui/core';
 
-// const SOCKET_URL: string = (process.env.REACT_APP_SOCKET_URL as string);
 
-// alert(!import.meta.env.VITE_SOME_KEY ? "Váriavel não existe" : import.meta.env.VITE_SOME_KEY )
-// alert(import.meta.env.VITE_SOME_KEY)
+const token = localStorage.getItem('token')
 
-
-// const socket = io(import.meta.env.VITE_SOCKET_URL)
-const token = "tokenTeste";
-
-const socket = io(import.meta.env.VITE_SOCKET_URL, {
+const socket = io(import.meta.env.VITE_API_URL, {
   query: {token}
 });
 
