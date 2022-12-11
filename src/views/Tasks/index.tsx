@@ -30,7 +30,8 @@ function Task() {
     const token = localStorage.getItem('token')
 
     const socket = io(import.meta.env.VITE_API_URL, {
-      query: {token}
+      query: {token},
+      //  autoConnect: false 
     });
 
 

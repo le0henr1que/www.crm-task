@@ -6,12 +6,20 @@ import Header from '../../components/Header';
 import '../../input.css';
 
 import io from 'socket.io-client'
-const socket = io(import.meta.env.VITE_API_URL)
+// const socket = io(import.meta.env.VITE_API_URL)
 
 
   
 
 function Contact() {
+  
+    const token = localStorage.getItem('token')
+
+    const socket = io(import.meta.env.VITE_API_URL, {
+      query: {token},
+      //  autoConnect: false 
+    });
+
 
     async function handleCreateSolicitation(event: FormEvent){
         event.preventDefault()
